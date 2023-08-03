@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-scroll";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
@@ -7,7 +8,7 @@ const NavBar = () => {
   const links = [
     {
       id: 1,
-      link: "home",
+      link: "Home",
     },
     {
       id: 2,
@@ -28,7 +29,7 @@ const NavBar = () => {
     },
   ];
   return (
-    <div className="flex justify-between items-center w-full h-20 px-4 text-white fixed bg-black">
+    <div className="flex justify-between items-center w-full h-20 px-4 text-white fixed bg-transparent">
       <div>
         <h1 className="text-5xl font-signature ml-2 mt-2">Vansh</h1>
       </div>
@@ -39,7 +40,17 @@ const NavBar = () => {
               key={id}
               className="px-4 cursor-pointer font-medium capitalize text-gray-500 hover:scale-110 duration-200"
             >
-              {link}
+              {/* <ScrollLink to={link} smooth={true} duration={500}>
+                {link}
+              </ScrollLink> */}
+              <Link
+                activeClass="active"
+                to={link}
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+              >{link}</Link>
             </li>
           );
         })}
@@ -55,17 +66,24 @@ const NavBar = () => {
 
       {nav && (
         <ul className="flex flex-col justify-center items-center absolute top-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 ">
-        {links.map(({ id, link }) => {
-          return (
-            <li
-              key={id}
-              className="px-4 cursor-pointer capitalize py-6 text-4xl"
-            >
-              {link}
-            </li>
-          );
-        })}
-      </ul>
+          {links.map(({ id, link }) => {
+            return (
+              <li
+                key={id}
+                className="px-4 cursor-pointer capitalize py-6 text-4xl"
+              >
+                <Link
+                  onClick={() => setNav(!nav)}
+                  to={link}
+                  smooth={true}
+                  duration={500}
+                >
+                  {link}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );
