@@ -3,6 +3,13 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
 
 const NavBar = () => {
+  const handleClick = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const [nav, setNav] = useState(false);
 
   const links = [
@@ -18,42 +25,31 @@ const NavBar = () => {
       id: 3,
       link: "Portfolio",
     },
-
     {
       id: 4,
       link: "Experience",
     },
     {
       id: 5,
-      link: "contact",
+      link: "Contact",
     },
   ];
+
   return (
     <div className="flex justify-between items-center w-full h-20 px-4 text-white fixed bg-transparent">
       <div>
         <h1 className="text-5xl font-signature ml-2 mt-2">Vansh</h1>
       </div>
       <ul className="hidden md:flex">
-        {links.map(({ id, link }) => {
-          return (
-            <li
-              key={id}
-              className="px-4 cursor-pointer font-medium capitalize text-gray-500 hover:scale-110 duration-200"
-            >
-              {/* <ScrollLink to={link} smooth={true} duration={500}>
-                {link}
-              </ScrollLink> */}
-              <Link
-                activeClass="active"
-                to={link}
-                spy={true}
-                smooth={true}
-                offset={-70}
-                duration={500}
-              >{link}</Link>
-            </li>
-          );
-        })}
+        {links.map(({ id, link }) => (
+          <li
+            key={id}
+            className="px-4 cursor-pointer font-medium capitalize text-gray-500 hover:scale-110 duration-200"
+            onClick={() => handleClick(link)}
+          >
+            {link}
+          </li>
+        ))}
       </ul>
       <div
         onClick={() => {
@@ -65,24 +61,21 @@ const NavBar = () => {
       </div>
 
       {nav && (
-        <ul className="flex flex-col justify-center items-center absolute top-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 ">
-          {links.map(({ id, link }) => {
-            return (
-              <li
-                key={id}
-                className="px-4 cursor-pointer capitalize py-6 text-4xl"
+        <ul className="flex flex-col justify-center items-center absolute top-0 w-full h-screen bg-gradient-to-b from-black to-gray-800">
+          {links.map(({ id, link }) => (
+            <li key={id} className="px-4 cursor-pointer capitalize py-6 text-4xl">
+              <Link
+                onClick={() => setNav(false)}
+                activeClass="active"
+                to={link}
+                spy={true}
+                smooth={true}
+                duration={500}
               >
-                <Link
-                  onClick={() => setNav(!nav)}
-                  to={link}
-                  smooth={true}
-                  duration={500}
-                >
-                  {link}
-                </Link>
-              </li>
-            );
-          })}
+                {link}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </div>
